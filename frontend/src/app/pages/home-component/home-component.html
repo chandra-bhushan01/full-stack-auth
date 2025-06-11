@@ -1,15 +1,21 @@
 <div class="min-h-[87vh] flex items-center justify-center p-6">
-
-  <div class="bg-white shadow-xl rounded-2xl p-8 w-full max-w-md text-gray-800">
+  <!-- User Profile Card -->
+  <div
+    class="bg-white shadow-xl rounded-2xl p-8 w-full max-w-md text-gray-800"
+    *ngIf="userData && userData.length > 0"
+  >
     <div class="flex flex-col items-center space-y-4">
-
       <!-- Profile Picture -->
-      <img class="h-24 w-24 rounded-full object-cover border-2 border-gray-300" [src]="userData[0]?.profile_picture" [alt]="userData[0]?.profile_picture"/>
+      <img
+        class="h-24 w-24 rounded-full object-cover border-2 border-gray-300"
+        [src]="userData[0]?.profile_picture"
+        [alt]="userData[0]?.full_name"
+      />
 
       <!-- User Info -->
       <div class="text-center">
-        <h2 class="text-xl font-semibold">{{userData[0].full_name}}</h2>
-        <p class="text-sm text-gray-500">{{userData[0].email}}</p>
+        <h2 class="text-xl font-semibold">{{ userData[0].full_name }}</h2>
+        <p class="text-sm text-gray-500">{{ userData[0].email }}</p>
       </div>
     </div>
 
@@ -17,22 +23,31 @@
     <div class="mt-6 space-y-4">
       <div class="flex justify-between">
         <span class="text-gray-600">DOB</span>
-        <span class="font-medium">{{userData[0].date_of_birth}}</span>
+        <span class="font-medium">{{ userData[0].date_of_birth }}</span>
       </div>
       <div class="flex justify-between">
         <span class="text-gray-600">Phone Number:</span>
-        <span class="font-medium">{{userData[0].phone_number}}</span>
+        <span class="font-medium">{{ userData[0].phone_number }}</span>
       </div>
       <div class="flex flex-col">
         <span class="text-gray-600 mb-1">Address:</span>
-        <span class="font-medium">{{userData[0].address }}</span>
+        <span class="font-medium">{{ userData[0].address }}</span>
       </div>
     </div>
 
-    <div class=" flex justify-center mt-5 p-2 gap-10">
-      <button class="bg-red-500 rounded px-3 py-1 text-white" (click)="Logout()">Logout</button>
-      <button class="bg-green-700 rounded px-3 py-1 text-white">Edit Details</button>
+    <!-- Action Buttons -->
+    <div class="flex justify-center mt-5 p-2 gap-10">
+      <button class="bg-red-500 rounded px-3 py-1 text-white" (click)="Logout()">
+        Logout
+      </button>
+      <button class="bg-green-700 rounded px-3 py-1 text-white">
+        Edit Details
+      </button>
     </div>
   </div>
 
+  <!-- Fallback -->
+  <div *ngIf="!userData || userData.length === 0">
+    <p class="text-red-600 font-semibold text-3xl text-center">User not logged in</p>
+  </div>
 </div>
