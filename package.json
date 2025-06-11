@@ -1,0 +1,25 @@
+{
+  "name": "login-signup",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "concurrently \"npm run start --prefix backend\" \"npm run start --prefix frontend\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chandra-bhushan01/full-stack-auth.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/chandra-bhushan01/full-stack-auth/issues"
+  },
+  "homepage": "https://github.com/chandra-bhushan01/full-stack-auth#readme",
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}

@@ -1,0 +1,78 @@
+<div class="flex items-center justify-center min-h-[70vh]">
+  <div class="w-full max-w-sm p-10 bg-white rounded-lg shadow-md">
+
+
+    <div *ngIf="isLoginForm">
+      <h2 class="mb-6 text-2xl font-bold text-center text-gray-700">Login</h2>
+      <form [formGroup]="loginForm" (ngSubmit)="onLoginSubmit()" class="flex flex-col gap-4 p-3">
+        <div>
+          <input type="email" formControlName="email" placeholder="Enter Email" class="p-2 outline-1 rounded w-full" />
+          <p *ngIf="loginForm.get('email')?.touched && loginForm.get('email')?.invalid" class="text-red-500">Enter Valid
+            email</p>
+
+        </div>
+
+        <div>
+          <input type="password" formControlName="password" placeholder="Enter Password"
+            class="p-2 outline-1 rounded w-full" />
+          <p *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.invalid" class="text-red-500">
+            minimum
+            length 8 </p>
+
+        </div>
+
+        <div class="flex w-full justify-center flex-col">
+          <p>Not Registered yet <span class="text-blue-500 font-medium cursor-pointer" (click)="toggleForm()">Create
+              Account</span></p>
+          <button type="submit" class="bg-blue-400 rounded p-2 shadow">Submit</button>
+        </div>
+
+
+
+      </form>
+    </div>
+
+
+    <div *ngIf="!isLoginForm" >
+      <h2 class="mb-6 text-2xl font-bold text-center text-gray-700">Signup</h2>
+      <form [formGroup]="registerForm" (ngSubmit)="onRegisterSubmit()" class="flex flex-col gap-4 p-3">
+        <div>
+          <input type="email" formControlName="name" placeholder="Enter name" class="p-2 outline-1 rounded w-full" />
+          <p *ngIf="registerForm.get('name')?.touched && registerForm.get('name')?.invalid" class="text-red-500">Enter
+            name</p>
+
+        </div>
+        <div>
+          <input type="email" formControlName="email" placeholder="Enter Email" class="p-2 outline-1 rounded w-full" />
+          <p *ngIf="registerForm.get('email')?.touched && registerForm.get('email')?.invalid" class="text-red-500">Enter Valid
+            email</p>
+
+        </div>
+
+        <div>
+          <input type="password" formControlName="password" placeholder="Enter Password"
+            class="p-2 outline-1 rounded w-full" />
+          <p *ngIf="registerForm.get('password')?.touched && registerForm.get('password')?.invalid" class="text-red-500">
+            minimum
+            length 8 </p>
+
+        </div>
+
+        <div class="flex w-full justify-center flex-col">
+          <p>Already Registered <span class="text-blue-500 font-medium cursor-pointer" (click)="toggleForm()">Login
+              Now</span></p>
+          <button type="submit" class="bg-blue-400 rounded p-2 shadow">Submit</button>
+          <p *ngIf="registerError!=''">registerError--- {{registerError}}</p>
+        </div>
+
+
+
+      </form>
+    </div>
+
+
+
+
+
+  </div>
+</div>
