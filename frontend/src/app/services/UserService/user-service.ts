@@ -13,9 +13,19 @@ export class UserService {
   private baseUrl = 'http://localhost:3000/user'
 
 
-  getUserData(): Observable<any>{
+  getUserData(): Observable<any> {
     return this.http.get(`${this.baseUrl}/getData`)
   }
-  
+
+  setUserData(data: {
+    address: string,
+    date_of_birth: Date,
+    email: string,
+    full_name: string,
+    phone_number: string,
+    profile_picture: string
+  }) {
+    return this.http.post(`${this.baseUrl}/setData`, data)
+  }
 
 }

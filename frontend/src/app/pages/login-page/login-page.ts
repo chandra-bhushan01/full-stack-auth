@@ -51,21 +51,17 @@ export class LoginPage {
       next: (response) => {
        
         if (response && response.token) {
-          // Store the token in localStorage
           localStorage.setItem('authToken', response.token);
-          console.log('Login successful! Token stored in localStorage.');
-          this.router.navigate(['']); // Navigate to home route after successful login and token storage
+          this.router.navigate(['/']);
         } else {
-          // Handle cases where token might be missing in a successful response
           this.errorMessage = 'Login successful, but no token received.';
           console.warn('Login successful, but no token received:', response);
         }
       },
       error: (error) => {
-        // Handle login errors (e.g., invalid credentials, network issues)
-        console.error('Login failed:', error);
+        
         if (error.error && error.error.message) {
-          this.errorMessage = error.error.message; // Display specific error message from backend
+          this.errorMessage = error.error.message;
         } else {
           this.errorMessage = 'An unexpected error occurred during login.';
         }
@@ -82,12 +78,7 @@ export class LoginPage {
         
       },
       error: (err) => {
-        console.log(err);
-        console.log(err.error);
-        console.log(err.error.Message);
-
-
-        this.registerError =  err.error.Message;
+        console.log(err)
         
         
         

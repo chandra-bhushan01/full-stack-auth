@@ -25,7 +25,6 @@ export class HomeComponent implements OnInit {
 
   getUserProfile() {
     this.userServices.getUserData().subscribe({
-
       next: (response) => {
         this.userData = response.Data;
         this.cdr.detectChanges();
@@ -33,15 +32,17 @@ export class HomeComponent implements OnInit {
         this.sharedUser.userData.next(this.userData);
       },
       error: (err) => {
-        console.error('Error fetching user data:', err);
+        console.log("Error due to SSR. IGNORE")
       }
     }
     );
+
   }
 
 
   Logout() {
     localStorage.removeItem("authToken");
+    this.sharedUser.userData.next(this.userData);
     this.router.navigate(['/login']);
 
   }

@@ -1,16 +1,10 @@
 <div class="min-h-[87vh] flex items-center justify-center p-6">
   <!-- User Profile Card -->
-  <div
-    class="bg-white shadow-xl rounded-2xl p-8 w-full max-w-md text-gray-800"
-    *ngIf="userData && userData.length > 0"
-  >
+  <div class="bg-white shadow-xl rounded-2xl p-8 w-full max-w-md text-gray-800" *ngIf="userData && userData.length > 0">
     <div class="flex flex-col items-center space-y-4">
       <!-- Profile Picture -->
-      <img
-        class="h-24 w-24 rounded-full object-cover border-2 border-gray-300"
-        [src]="userData[0]?.profile_picture"
-        [alt]="userData[0]?.full_name"
-      />
+      <img class="h-24 w-24 rounded-full object-cover border-2 border-gray-300" [src]="userData[0]?.profile_picture"
+        [alt]="userData[0]?.full_name" />
 
       <!-- User Info -->
       <div class="text-center">
@@ -40,8 +34,7 @@
       <button class="bg-red-500 rounded px-3 py-1 text-white" (click)="Logout()">
         Logout
       </button>
-      <button class="bg-green-700 rounded px-3 py-1 text-white"
-      (click)="EditDetails()">
+      <button class="bg-green-700 rounded px-3 py-1 text-white" (click)="EditDetails()">
         Edit Details
       </button>
     </div>

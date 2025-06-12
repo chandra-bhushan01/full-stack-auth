@@ -1,17 +1,21 @@
-import { TestBed } from '@angular/core/testing';
-import { CanActivateFn } from '@angular/router';
+import { Injectable } from '@angular/core';
+import { CanActivate, Router } from '@angular/router';
 
-import { authguardGuard } from './authguard-guard';
+@Injectable({
+  providedIn: 'root'
+})
+export class AuthGuard implements CanActivate {
 
-describe('authguardGuard', () => {
-  const executeGuard: CanActivateFn = (...guardParameters) => 
-      TestBed.runInInjectionContext(() => authguardGuard(...guardParameters));
+  constructor(private router: Router) {}
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({});
-  });
+  canActivate(): boolean {
+    const token = localStorage.getItem('authToken');
 
-  it('should be created', () => {
-    expect(executeGuard).toBeTruthy();
-  });
-});
+    if (token) {
+      return true; // allow route
+    } else {
+      this.router.navigate(['/login']); // redirect if no token
+      return false;
+    }
+  }
+}

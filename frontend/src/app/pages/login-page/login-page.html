@@ -20,6 +20,9 @@
             length 8 </p>
 
         </div>
+        <div *ngIf="errorMessage" class="text-red-600 bg-red-100 p-2 rounded mb-2">
+          {{ errorMessage }}
+        </div>
 
         <div class="flex w-full justify-center flex-col">
           <p>Not Registered yet <span class="text-blue-500 font-medium cursor-pointer" (click)="toggleForm()">Create
@@ -33,7 +36,7 @@
     </div>
 
 
-    <div *ngIf="!isLoginForm" >
+    <div *ngIf="!isLoginForm">
       <h2 class="mb-6 text-2xl font-bold text-center text-gray-700">Signup</h2>
       <form [formGroup]="registerForm" (ngSubmit)="onRegisterSubmit()" class="flex flex-col gap-4 p-3">
         <div>
@@ -44,7 +47,8 @@
         </div>
         <div>
           <input type="email" formControlName="email" placeholder="Enter Email" class="p-2 outline-1 rounded w-full" />
-          <p *ngIf="registerForm.get('email')?.touched && registerForm.get('email')?.invalid" class="text-red-500">Enter Valid
+          <p *ngIf="registerForm.get('email')?.touched && registerForm.get('email')?.invalid" class="text-red-500">Enter
+            Valid
             email</p>
 
         </div>
@@ -52,7 +56,8 @@
         <div>
           <input type="password" formControlName="password" placeholder="Enter Password"
             class="p-2 outline-1 rounded w-full" />
-          <p *ngIf="registerForm.get('password')?.touched && registerForm.get('password')?.invalid" class="text-red-500">
+          <p *ngIf="registerForm.get('password')?.touched && registerForm.get('password')?.invalid"
+            class="text-red-500">
             minimum
             length 8 </p>
 

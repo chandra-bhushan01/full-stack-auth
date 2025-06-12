@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { SharedUser } from '../../Shared Services/SharedUser';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { UserService } from '../../services/UserService/user-service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-update',
@@ -14,12 +16,11 @@ export class Update implements OnInit {
   user: any = {};
   updateForm!: FormGroup;
 
-  constructor(private userShared: SharedUser, private fb: FormBuilder) {}
+  constructor(private userShared: SharedUser, private fb: FormBuilder, private userService: UserService) { }
 
   ngOnInit() {
     this.userShared.userData.subscribe((data) => {
       this.user = data[0];
-      console.log('user', this.user);
 
       // Now that user is available, initialize the form with default values
       this.updateForm = this.fb.group({
@@ -33,10 +34,29 @@ export class Update implements OnInit {
     });
   }
 
-
-
-
-  onSubmit(){
+  setUserData() {
     console.log(this.updateForm.value)
+    
+  this.userService.setUserData(this.updateForm.value).subscribe({
+    next: (res) => {
+      console.log('User updated successfully:', res);
+    },
+    error: (err) => {
+      console.error('Error updating user:', err);
+    }
+  });
+
   }
+
+
+
+  onSubmit() {
+    if (this.updateForm.valid) {
+      this.setUserData();
+      
+    } else {
+      console.log('Form invalid');
+    }
+  }
+
 }
