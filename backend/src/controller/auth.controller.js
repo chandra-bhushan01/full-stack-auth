@@ -58,8 +58,8 @@ exports.userLogin = async (req, res) => {
 
         const getUserByEmail = (email) => {
             return new Promise((resolve, reject) => {
-                const queryStr = "SELECT * FROM users";
-                db.query(queryStr, [], (err, result) => {
+                const queryStr = "SELECT * FROM users where email = ?";
+                db.query(queryStr, [email], (err, result) => {
                     if (err) return reject(err);
                     resolve(result);
                 });
@@ -67,7 +67,6 @@ exports.userLogin = async (req, res) => {
         };
 
         const userdetails = await getUserByEmail(email);
-
 
         if (!userdetails.length) {
             return res.status(404).json({ message: "User doesn't exist. Please register" });
@@ -83,9 +82,10 @@ exports.userLogin = async (req, res) => {
 
         const payload = {
             user: {
+                id: user.id,
                 name: user.full_name,
-                email: user.email
             }
+                
         };
 
         const token = jwt.sign(payload, process.env.JWT_SECRET, {
