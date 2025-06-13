@@ -3,6 +3,7 @@ import { AuthService } from '../../services/AuthService/auth-service';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { SocketService } from '../../services/SocketService/socket';
 
 @Component({
   selector: 'app-login-page',
@@ -15,14 +16,14 @@ import { Router } from '@angular/router';
 export class LoginPage {
   loginForm: FormGroup;
   registerForm: FormGroup;
-  registerError:any = '';
-  errorMessage:any = '';
-  
+  registerError: any = '';
+  errorMessage: any = '';
+
 
   isLoginForm = true;
 
 
-  constructor(private authService: AuthService, private fb: FormBuilder , private router:Router) {
+  constructor(private authService: AuthService, private fb: FormBuilder, private router: Router, private ws: SocketService) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(5)]]
@@ -45,11 +46,21 @@ export class LoginPage {
 
 
 
-  userLogin(email:string, password:string) {
+  userLogin(email: string, password: string) {
+    // using the web sockets 
+    this.ws.connect();
+    this.ws.emit("message", "hello from angular forntend");
+    this.ws.on<string>('messageReply').subscribe((msg) => {
+      console.log("📨 Received from backend:", msg);
+    });
+
+
+
+
     this.errorMessage = null; // Clear any previous errors
     this.authService.userLogin(email, password).subscribe({
       next: (response) => {
-       
+
         if (response && response.token) {
           localStorage.setItem('authToken', response.token);
           this.router.navigate(['/']);
@@ -59,7 +70,7 @@ export class LoginPage {
         }
       },
       error: (error) => {
-        
+
         if (error.error && error.error.message) {
           this.errorMessage = error.error.message;
         } else {
@@ -75,42 +86,42 @@ export class LoginPage {
         console.log('Registration successful:', response);
         this.isLoginForm = true;
         this.registerError = '';
-        
+
       },
       error: (err) => {
         console.log(err)
-        
-        
-        
+
+
+
       }
     })
-}
-
-
-toggleForm() {
-  this.isLoginForm = !this.isLoginForm;
-  
-
-}
-
-onLoginSubmit() {
-  if (this.loginForm.valid) {
-    console.log('Form data:', this.loginForm.value);
-    this.userLogin(this.loginForm.value.email, this.loginForm.value.password)
-  } else {
-    this.loginForm.markAllAsTouched(); // Show validation messages
-  }
-}
-
-onRegisterSubmit() {
-  if (this.registerForm.valid) {
-    console.log('Form data:', this.registerForm.value);
-    this.userSignup(this.registerForm.value.name, this.registerForm.value.email, this.registerForm.value.password)
-  } else {
-    this.registerForm.markAllAsTouched(); // Show validation messages
   }
 
-}
+
+  toggleForm() {
+    this.isLoginForm = !this.isLoginForm;
+
+
+  }
+
+  onLoginSubmit() {
+    if (this.loginForm.valid) {
+      console.log('Form data:', this.loginForm.value);
+      this.userLogin(this.loginForm.value.email, this.loginForm.value.password)
+    } else {
+      this.loginForm.markAllAsTouched(); // Show validation messages
+    }
+  }
+
+  onRegisterSubmit() {
+    if (this.registerForm.valid) {
+      console.log('Form data:', this.registerForm.value);
+      this.userSignup(this.registerForm.value.name, this.registerForm.value.email, this.registerForm.value.password)
+    } else {
+      this.registerForm.markAllAsTouched(); // Show validation messages
+    }
+
+  }
 
 
 }

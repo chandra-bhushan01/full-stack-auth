@@ -16,7 +16,7 @@ export class Update implements OnInit {
   user: any = {};
   updateForm!: FormGroup;
 
-  constructor(private userShared: SharedUser, private fb: FormBuilder, private userService: UserService) { }
+  constructor(private userShared: SharedUser, private fb: FormBuilder, private userService: UserService, private router: Router) { }
 
   ngOnInit() {
     this.userShared.userData.subscribe((data) => {
@@ -36,15 +36,17 @@ export class Update implements OnInit {
 
   setUserData() {
     console.log(this.updateForm.value)
-    
-  this.userService.setUserData(this.updateForm.value).subscribe({
-    next: (res) => {
-      console.log('User updated successfully:', res);
-    },
-    error: (err) => {
-      console.error('Error updating user:', err);
-    }
-  });
+
+    this.userService.setUserData(this.updateForm.value).subscribe({
+      next: (res) => {
+        console.log('User updated successfully:', res);
+        this.router.navigate([""])
+
+      },
+      error: (err) => {
+        console.error('Error updating user:', err);
+      }
+    });
 
   }
 
@@ -53,7 +55,7 @@ export class Update implements OnInit {
   onSubmit() {
     if (this.updateForm.valid) {
       this.setUserData();
-      
+
     } else {
       console.log('Form invalid');
     }

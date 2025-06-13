@@ -43,9 +43,7 @@ exports.registerUser = async (req, res) => {
 
 
 exports.userLogin = async (req, res) => {
-
     const { email, password } = req.body;
-
     if (!email || !password) {
         return res.status(400).json({
             message: "Email and Password are required"
@@ -53,9 +51,6 @@ exports.userLogin = async (req, res) => {
     }
 
     try {
-
-
-
         const getUserByEmail = (email) => {
             return new Promise((resolve, reject) => {
                 const queryStr = "SELECT * FROM users where email = ?";
